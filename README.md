@@ -1,4 +1,4 @@
-# Ser — Loco por tu forma de ser
+# Ser — Loco por tu forma de ser.
 
 This is a small web page that shows animated lyrics inside heart-shaped speech bubbles (blue & white theme). It's made to be a sweet dedication.
 
