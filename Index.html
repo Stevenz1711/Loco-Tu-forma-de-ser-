@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Ser — Para Damarys</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+      :root{ --bg1:#fff6fb; --accent1:#ff5aa5; --accent2:#ff9ccf; --text:#2b2030 }
+      *{box-sizing:border-box}
+      body{ margin:0; font-family:Poppins,system-ui,Arial; background:linear-gradient(180deg,var(--bg1),#fff); color:var(--text); display:flex; align-items:center; justify-content:center; min-height:100vh }
+
+      .wrap{ width:min(880px,94%); padding:48px 20px }
+      header{ text-align:left; margin-bottom:14px }
+  h1{ margin:0; font-size:clamp(20px,4.5vw,34px); color:var(--accent1) }
+      .sub{ color:#667085; margin-top:6px }
+
+  .panel{ background:linear-gradient(180deg,#fff,#fffafc); border-radius:12px; box-shadow:0 12px 30px rgba(16,24,40,.06); overflow:hidden }
+      .panel .top{ padding:18px 20px; display:flex; gap:12px; align-items:center }
+  .badge{ background:var(--accent1); color:#fff; padding:8px 12px; border-radius:999px; font-weight:600 }
+
+    .lyrics{ padding:18px; display:grid; gap:12px }
+
+    /* casual speech bubble lines with music note decoration */
+  .bubble{ position:relative; padding:14px 18px; background:#fff8fb; border-radius:12px; border:1px solid rgba(43,32,48,.04); align-items:center; gap:12px; cursor:pointer; opacity:0; transform:scale(.85) translateY(14px); display:none }
+  .bubble:nth-child(odd){ background:#fff0f7 }
+  .bubble .note{ width:36px; height:36px; display:grid; place-items:center; border-radius:999px; background:linear-gradient(135deg,var(--accent1),var(--accent2)); color:white; font-weight:700; box-shadow:0 8px 18px rgba(255,90,165,.12) }
+    .bubble .txt{ flex:1; font-size:1rem; color:var(--text) }
+
+      /* small triangle tail */
+      .bubble::after{ content:''; position:absolute; width:12px; height:12px; background:inherit; transform:rotate(45deg); left:22px; bottom:-6px; border-radius:2px }
+
+      @keyframes popUp{ 
+        0%{ transform:scale(.85) translateY(14px); opacity:0 }
+        60%{ transform:scale(1.06) translateY(-6px); opacity:1 }
+        100%{ transform:scale(1) translateY(0); opacity:1 }
+      }
+
+      /* floating music notes background */
+  .bg-notes{ position:fixed; inset:0; pointer-events:none }
+  .bg-notes i{ position:absolute; font-style:normal; color:rgba(255,90,165,.10); font-size:18px; transform:translateY(0); animation:float 6s linear infinite }
+      @keyframes float{ to{ transform:translateY(-110vh) } }
+
+      /* confetti spark */
+  .conf{ position:absolute; width:10px; height:10px; background:var(--accent2); border-radius:2px; opacity:0.95; transform:translate(-50%,-50%); animation:confetti .9s cubic-bezier(.2,.7,.2,1) forwards }
+      @keyframes confetti{ 0%{ transform:translate(-50%,-50%) scale(.2); opacity:1 } 100%{ transform:translate(-50%,-50%) translateY(-120px) rotate(360deg) scale(1); opacity:0 } }
+
+  .final{ padding:18px; text-align:center }
+  .final .msg{ display:inline-block; padding:8px 14px; border-radius:999px; background:linear-gradient(90deg,#fff,#fffafc); color:var(--accent2); font-weight:600 }
+
+  /* navigation controls */
+  .nav-controls{ display:flex; gap:8px; align-items:center }
+  .nav-btn{ background:transparent; border:1px solid rgba(43,32,48,.08); padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:600; color:var(--accent1) }
+  .nav-btn:active{ transform:translateY(1px) }
+  .bubble.active{ display:flex; opacity:1; transform:translateY(0) scale(1.02); outline:3px solid rgba(255,90,165,.14); box-shadow:0 10px 30px rgba(255,90,165,.06); animation:popUp .68s cubic-bezier(.2,.75,.25,1) forwards }
+    </style>
+  </head>
+  <body>
+    <div class="bg-notes" id="bgNotes"></div>
+
+    <div class="wrap">
+      <header>
+        <h1>Ser — Loco por tu forma de ser</h1>
+        <div class="sub">Una presentación casual y divertida — para Damarys</div>
+      </header>
+
+      <div class="panel">
+        <div class="top">
+          <div class="badge">♫</div>
+          <div style="flex:1">Canción favorita — letras</div>
+          <div class="nav-controls">
+            <button class="nav-btn" id="prevBtn">◀ Anterior</button>
+            <button class="nav-btn" id="nextBtn">Siguiente ▶</button>
+          </div>
+        </div>
+
+        <div class="lyrics" id="lyrics">
+          <div class="bubble"><div class="note">♪</div><div class="txt">Te vi bailar, brillando con tu ausencia</div></div>
+          <div class="bubble"><div class="note">♩</div><div class="txt">Sin sentir piedad chocando con las mesas</div></div>
+          <div class="bubble"><div class="note">♪</div><div class="txt">Te burlaste de todos, te reíste de mí</div></div>
+          <div class="bubble"><div class="note">♬</div><div class="txt">Y tus amigos escaparon de vos</div></div>
+
+          <div class="bubble"><div class="note">♪</div><div class="txt">Y a mí me volvió loco tu forma de ser, a ver</div></div>
+          <div class="bubble"><div class="note">♩</div><div class="txt">(Y a mí me volvió loco tu forma de ser)</div></div>
+
+          <div class="bubble"><div class="note">♪</div><div class="txt">Tu egoísmo y tu soledad</div></div>
+          <div class="bubble"><div class="note">♬</div><div class="txt">Son estrellas en la noche de la mediocridad</div></div>
+          <div class="bubble"><div class="note">♪</div><div class="txt">Me volvió loco tu forma de ser</div></div>
+
+          <div class="bubble"><div class="note">♩</div><div class="txt">A mí me volvió loco tu forma de ser</div></div>
+          <div class="bubble"><div class="note">♪</div><div class="txt">Tu egoísmo y tu soledad</div></div>
+          <div class="bubble"><div class="note">♬</div><div class="txt">Son joyas en el barro de la mediocridad, a ver</div></div>
+        </div>
+      </div>
+
+      <div class="final"><span class="msg">Para Damarys • con cariño</span></div>
+    </div>
+
+    <script>
+      // subtle floating music notes background
+      (function(){
+        const bg = document.getElementById('bgNotes');
+        const icons = ['♪','♩','♬','♭'];
+        function make(){
+          const i = document.createElement('i');
+          i.textContent = icons[Math.floor(Math.random()*icons.length)];
+          i.style.left = Math.random()*100 + '%';
+          i.style.top = 100 + Math.random()*10 + 'vh';
+          i.style.fontSize = 10 + Math.random()*20 + 'px';
+          i.style.animationDuration = 6 + Math.random()*6 + 's';
+          bg.appendChild(i);
+          setTimeout(()=> i.remove(), (parseFloat(i.style.animationDuration)||6)*1000 + 500);
+        }
+        for(let k=0;k<10;k++) make();
+        setInterval(make, 700);
+      })();
+
+      // confetti-like sparks on click for each bubble
+      document.querySelectorAll('.bubble').forEach(b=>{
+        b.addEventListener('click', e=>{
+          for(let i=0;i<12;i++){
+            const c = document.createElement('div');
+            c.className='conf';
+            c.style.left = (e.offsetX + (Math.random()-0.5)*60) + 'px';
+            c.style.top = (e.offsetY + (Math.random()-0.5)*40) + 'px';
+            c.style.background = ['#ffd86b','#ff8ccf','#ff7ab6','#ffb3e6'][Math.floor(Math.random()*4)];
+            b.appendChild(c);
+            setTimeout(()=> c.remove(), 900);
+          }
+        });
+      });
+
+      // Navigation: show one lyric at a time, allow prev/next and arrow keys
+      (function(){
+        const bubbles = Array.from(document.querySelectorAll('.bubble'));
+        if(!bubbles.length) return;
+        let idx = 0;
+
+        // make bubbles focusable for keyboard accessibility
+        bubbles.forEach(b => b.setAttribute('tabindex', '0'));
+
+        function setActive(i){
+          if(i < 0 || i >= bubbles.length) return;
+          bubbles.forEach((el, n)=> el.classList.toggle('active', n===i));
+          // focus active bubble for keyboard users and smooth scroll
+          const el = bubbles[i];
+          el.scrollIntoView({behavior:'smooth', block:'center'});
+          // reflow + focus to ensure animation runs when revisiting
+          void el.offsetWidth;
+          el.focus({ preventScroll:true });
+        }
+
+        function next(){ idx = Math.min(bubbles.length-1, idx+1); setActive(idx); }
+        function prev(){ idx = Math.max(0, idx-1); setActive(idx); }
+
+        document.getElementById('nextBtn').addEventListener('click', next);
+        document.getElementById('prevBtn').addEventListener('click', prev);
+
+        // keyboard arrows
+        document.addEventListener('keydown', (e)=>{
+          if(e.key === 'ArrowRight') next();
+          if(e.key === 'ArrowLeft') prev();
+        });
+
+        // initialize to first lyric
+        setActive(0);
+      })();
+    </script>
+  </body>
+</html>
